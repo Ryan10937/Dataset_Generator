@@ -1,6 +1,8 @@
+import inspect
 from .ConfigReader import Config_Reader
 import os
 import pandas as pd
+import utils.transformation_functions as tfuncts 
 class Dataset_Generator():
   '''
   Class that receives a folder of objects and folder of labels and returns a dataset generator 
@@ -8,7 +10,6 @@ class Dataset_Generator():
   def __init__(self,config_path):
     self.config_path = config_path
     self.config = Config_Reader(self.config_path).config
-    
   def _get_objects(self,item_name,item_extensions):
     
     item_path = self.config[item_name]
@@ -33,6 +34,9 @@ class Dataset_Generator():
     objects.merge(labels,how='inner',on='name')
     return objects
 
+  def find_transformation_function(self):
+    # self.transformation_function()
+    functions = inspect.getmembers(tfuncts,inspect.isfunction)
+    self.transformation_function = [x for x,y in functions if y==self.config['transformation_function']]
   def run_pipeline(self):
     self.df = self._get_item_label_pairs()
-    

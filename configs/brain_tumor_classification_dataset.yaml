@@ -6,3 +6,6 @@ label_folder: null
 label_extensions: 
   - txt 
   - xml
+
+
+  transformation_function: get_class_from_image_path
