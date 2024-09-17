@@ -1,0 +1,8 @@
+object_folder: D:\datasets\Brain_Tumor_MRI\Training
+object_extensions: 
+  - jpg
+  - jpeg
+label_folder: null
+label_extensions: 
+  - txt 
+  - xml
