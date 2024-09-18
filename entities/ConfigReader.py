@@ -1,6 +1,6 @@
 import yaml
 class Config_Reader():
-  def __init__(self,config_path) -> None:
+  def __init__(self,config_path):
     self.config_path = config_path
     self.config = self.open_config()
   def open_config(self):

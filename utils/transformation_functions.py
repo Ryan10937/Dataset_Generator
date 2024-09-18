@@ -7,4 +7,5 @@ class dataset_label():
   def open_xml(self):
     pass
 def get_class_from_image_path(label):
-  return label.media_path.split(os.sep)[-2]
+  import os
+  return label.media_path,label.media_path.split(os.sep)[-2]

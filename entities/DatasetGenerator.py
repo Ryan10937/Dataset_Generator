@@ -32,11 +32,14 @@ class Dataset_Generator():
     labels = pd.DataFrame({'labels':labels})
     labels['name'] = labels.apply(get_name,col_name='labels',axis=1)
     objects.merge(labels,how='inner',on='name')
+    self.dataset_labels = [tfuncts.dataset_label(row['objects'],None if 'labels' not in row.keys() else row['labels']) for i,row in objects.iterrows()]
     return objects
 
   def find_transformation_function(self):
-    # self.transformation_function()
     functions = inspect.getmembers(tfuncts,inspect.isfunction)
-    self.transformation_function = [x for x,y in functions if y==self.config['transformation_function']]
+    self.transformation_function = [y for x,y in functions if x==self.config['transformation_function']][0]
+    
   def run_pipeline(self):
     self.df = self._get_item_label_pairs()
+    self.find_transformation_function()
+    return (self.transformation_function(row) for row in self.dataset_labels)
