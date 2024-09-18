@@ -10,6 +10,7 @@ class Dataset_Generator():
   def __init__(self,config_path):
     self.config_path = config_path
     self.config = Config_Reader(self.config_path).config
+    
   def _get_objects(self,item_name,item_extensions):
     
     item_path = self.config[item_name]
