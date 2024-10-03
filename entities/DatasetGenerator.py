@@ -35,10 +35,11 @@ class Dataset_Generator():
     objects['name'] = objects.apply(get_name,col_name='objects',axis=1)
     labels = pd.DataFrame({'labels':labels})
     labels['name'] = labels.apply(get_name,col_name='labels',axis=1)
-    objects = objects.merge(labels,how='inner',on='name')
+    # objects = objects.merge(labels,how='inner',on='name')
+    objects = objects.merge(labels,how='outer',on='name')
+    objects = objects.dropna(subset=['objects'])
     labels.to_csv('./tmp.csv')
     objects.to_csv('./tmp1.csv')
-    # self.dataset_labels = [tfuncts.dataset_label(row['objects'],None if 'labels' not in row.keys() else row['labels']) for i,row in objects.iterrows()]
     self.dataset_labels = [tfuncts.dataset_label(row['objects'],row['labels']) for i,row in objects.iterrows()]
 
   def find_transformation_function(self):
